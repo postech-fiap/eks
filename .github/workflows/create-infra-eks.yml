@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
   terraform-apply-infra:
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +29,7 @@ jobs:
       - name: Configure kubeconfig with cluster aws
         run: |
           echo "Configuring EKS cluster"
-          aws eks update-kubeconfig --name fiap-app-eks --region us-east-1
+          aws eks update-kubeconfig --name fiap-app-eks-aws --region us-east-1
         if: success()
 
       - name: Configuring Infra Kubernetes

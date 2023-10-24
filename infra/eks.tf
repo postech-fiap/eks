@@ -19,4 +19,8 @@ module "eks" {
       instance_types         = ["t2.micro"]
     }
   }
+
+  tags = {
+    name = "eks"
+  }
 }
