@@ -1,0 +1,17 @@
+name: Destroy terraform resources
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  destroy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.3
+
+      - name: Terraform Destroy
+        run: terraform -chdir=fiap-gerenciamento-pedidos-eks/env/dev destroy -auto-approve
