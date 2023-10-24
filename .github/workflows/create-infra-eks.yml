@@ -1,6 +1,7 @@
 name: Create Infrastructure EKS (Kubernetes)
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 
 jobs:
 
