@@ -14,4 +14,4 @@ jobs:
         uses: hashicorp/setup-terraform@v2.0.3
 
       - name: Terraform Destroy
-        run: terraform -chdir=fiap-gerenciamento-pedidos-eks/env/dev destroy -auto-approve
+        run: terraform -chdir="./env/dev" destroy -auto-approve

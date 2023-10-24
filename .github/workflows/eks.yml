@@ -5,7 +5,7 @@ on:
 
 jobs:
 
-  initial-setup:
+  terraform-apply-infra:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,16 +23,9 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.3
 
-  terraform-apply:
-    runs-on: ubuntu-latest
-    needs: initial-setup
+      - run: terraform -chdir="./env/dev" init
 
-    steps:
-      - uses: actions/checkout@v4
-
-      - run: terraform -chdir=fiap-gerenciamento-pedidos-eks/env/dev init
-
-      - run: terraform -chdir=fiap-gerenciamento-pedidos-eks/env/dev apply -auto-approve
+      - run: terraform -chdir="./env/dev" apply -auto-approve
 
   kubernetes-apply-infra:
     runs-on: ubuntu-latest
