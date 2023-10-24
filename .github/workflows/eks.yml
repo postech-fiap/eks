@@ -67,5 +67,5 @@ jobs:
 
   terraform-destroy:
     needs: kubernetes-apply-infra
-    uses: ./.github/workflows/terraform-destroy-eks.yml
+    uses: ./.github/workflows/destroy.yml
     secrets: inherit
