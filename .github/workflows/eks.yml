@@ -68,8 +68,3 @@ jobs:
       - name: Test connection
         run: kubectl get svc
         if: success()
-
-#  terraform-destroy:
-#    needs: kubernetes-apply-infra
-#    uses: ./.github/workflows/destroy.yml
-#    secrets: inherit
