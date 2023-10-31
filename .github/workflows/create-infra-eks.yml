@@ -55,10 +55,6 @@ jobs:
       - name: Configuring Infra Kubernetes
         run: |
           kubectl apply -f ./kubernetes/api/load-balancer-service.yaml
-          kubectl apply -f ./kubernetes/config/db.yaml
-          kubectl apply -f ./kubernetes/config/db-migration.yaml
-          kubectl apply -f ./kubernetes/db/pod.yaml
-          kubectl apply -f ./kubernetes/db/service.yaml
           kubectl apply -f ./kubernetes/api/service.yaml
         if: success()
 
