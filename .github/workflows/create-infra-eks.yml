@@ -32,10 +32,11 @@ jobs:
           aws eks update-kubeconfig --name fiap-aws-eks --region us-east-1
         if: success()
 
-      - name: Configuring Secrets on Kubernetes files
+      - name: Configuring Secrets on Kubernetes
         run: |
-          sed -i "s,VAL_MYSQL_ROOT_USERNAME,$secrets.MYSQL_ROOT_USERNAME," ./kubernetes/db/pod.yaml
-          sed -i "s,VAL_MYSQL_ROOT_PASSWORD,$secrets.MYSQL_ROOT_PASSWORD," ./kubernetes/db/pod.yaml
+          kubectl delete secret db --ignore-not-found
+
+          kubectl create secret generic db --from-literal=username=${{secrets.MYSQL_ROOT_USERNAME}} --from-literal=password=${{secrets.MYSQL_ROOT_PASSWORD}}
         if: success()
 
       - name: Configuring Infra Kubernetes
