@@ -29,7 +29,20 @@ jobs:
       - name: Configure kubeconfig with cluster aws
         run: |
           echo "Configuring EKS cluster"
-          aws eks update-kubeconfig --name fiap-app-eks-aws --region us-east-1
+          aws eks update-kubeconfig --name fiap-eks-aws --region us-east-1
+        if: success()
+
+      - name: Configuring Secrets on Kubernetes files
+        run: |
+          sed -i "s,VAL_MYSQL_ROOT_USERNAME,$secrets.MYSQL_ROOT_USERNAME," ./kubernetes/api/deployment.yaml
+          sed -i "s,VAL_MYSQL_ROOT_PASSWORD,$secrets.MYSQL_ROOT_PASSWORD," ./kubernetes/api/deployment.yaml
+          sed -i "s,VAL_MERCADO_PAGO_USER_ID,$secrets.MERCADO_PAGO_USER_ID," ./kubernetes/api/deployment.yaml
+          sed -i "s,VAL_MERCADO_PAGO_EXTERNAL_ID,$secrets.MERCADO_PAGO_EXTERNAL_ID," ./kubernetes/api/deployment.yaml
+          sed -i "s,VAL_MERCADO_PAGO_TOKEN,$secrets.MERCADO_PAGO_TOKEN," ./kubernetes/api/deployment.yaml
+          sed -i "s,VAL_MERCADO_PAGO_WEBHOOK_URL,$secrets.MERCADO_PAGO_WEBHOOK_URL," ./kubernetes/api/deployment.yaml
+
+          sed -i "s,VAL_MYSQL_ROOT_USERNAME,$secrets.MYSQL_ROOT_USERNAME," ./kubernetes/db/pod.yaml
+          sed -i "s,VAL_MYSQL_ROOT_PASSWORD,$secrets.MYSQL_ROOT_PASSWORD," ./kubernetes/db/pod.yaml
         if: success()
 
       - name: Configuring Infra Kubernetes
@@ -40,13 +53,6 @@ jobs:
           kubectl apply -f ./kubernetes/db/pod.yaml
           kubectl apply -f ./kubernetes/db/service.yaml
           kubectl apply -f ./kubernetes/api/service.yaml
-        env:
-          MYSQL_ROOT_USERNAME: '${{ secrets.MYSQL_ROOT_USERNAME }}'
-          MYSQL_ROOT_PASSWORD: '${{ secrets.MYSQL_ROOT_PASSWORD }}'
-          MERCADO_PAGO_USER_ID: '${{ secrets.MERCADO_PAGO_USER_ID }}'
-          MERCADO_PAGO_EXTERNAL_ID: '${{ secrets.MERCADO_PAGO_EXTERNAL_ID }}'
-          MERCADO_PAGO_TOKEN: '${{ secrets.MERCADO_PAGO_TOKEN }}'
-          MERCADO_PAGO_WEBHOOK_URL: '${{ secrets.MERCADO_PAGO_WEBHOOK_URL }}'
         if: success()
 
       - name: Test connection
