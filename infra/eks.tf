@@ -13,7 +13,7 @@ module "eks" {
   eks_managed_node_groups = {
     fiap-aws-eks = {
       min_size               = 1
-      max_size               = 3
+      max_size               = 5
       desired_size           = 1
       vpc_security_group_ids = [aws_security_group.fiap-security-group-app.id]
       instance_types         = ["t3.medium"]
