@@ -16,7 +16,7 @@ module "eks" {
       max_size               = 3
       desired_size           = 1
       vpc_security_group_ids = [aws_security_group.fiap-security-group-app.id]
-      instance_types         = ["t2.micro"]
+      instance_types         = ["t3.medium"]
     }
   }
 
