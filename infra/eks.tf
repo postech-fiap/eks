@@ -11,7 +11,7 @@ module "eks" {
 
   #  Configuração das máquinas
   eks_managed_node_groups = {
-    fiap = {
+    fiap-aws-eks = {
       min_size               = 1
       max_size               = 3
       desired_size           = 1
